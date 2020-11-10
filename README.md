@@ -208,5 +208,5 @@ pt_key=****;pt_pin=***;&pt_key=****;pt_pin=***;
 
 [@lxk0301](https://github.com/lxk0301)  - 京东系列其他签到
 
-[@Zero-S1](https://github.com/Zero-S1/xmly_speed) - 喜马拉雅极速版签到
+[@Zero-S1](https://github.com/Zero-S1/xmly_speed) - 喜马拉雅极速版签到 
 

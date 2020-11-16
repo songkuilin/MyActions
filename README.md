@@ -190,7 +190,7 @@ pt_key=****;pt_pin=***;&pt_key=****;pt_pin=***;
 1. 参考[这里](http://note.youdao.com/noteshare?id=6cd72de428957d593c129749194b4352)，安装[pull插件](https://github.com/apps/pull)，并确认此项目已在pull插件的作用下（参考文中1-d）。
 2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
 3. 确保pull.yml里面是`mergeMethod: hardreset`(默认就是hardreset)。
-4. ENJOY!上游更改三小时左右就会自动发起同步。
+4. ENJOY!上游更改三小时左右就会自动发起同步。 
 
 ##### 方案B - 保留自己分支的修改
 

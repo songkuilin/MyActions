@@ -5,3 +5,6 @@ rules: # Array of rules
       mergeMethod: hardreset # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
       mergeUnstable: true # Optional, merge pull request even when the mergeable_state is not clean. Default: false
 
+
+
+

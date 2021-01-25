@@ -1,0 +1,36 @@
+name: 喜马拉雅极速版
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "*/30 * * * *"
+    watch:
+        types: [started]
+    repository_dispatch:
+        types: xmly_speed
+        
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: "Set up Python"
+              uses: actions/setup-python@v1
+              with:
+                  python-version: 3.7
+
+            - name: "安装依赖包"
+              run: pip install -r ./requirements.txt
+
+            - name: "运行 喜马拉雅极速版"
+              run: python3 xmly_speed.py
+              env:
+                  XMLY_SPEED_COOKIE: ${{ secrets.XMLY_SPEED_COOKIE }}
+                  XMLY_ACCUMULATE_TIME: ${{ secrets.XMLY_ACCUMULATE_TIME }}
+                  XMLY_ACCUMULATE_INDEX: ${{ secrets.XMLY_ACCUMULATE_INDEX }}
+                  XMLY_ACCUMULATE_HOURS: ${{ secrets.XMLY_ACCUMULATE_HOURS }}
+                  XMLY_ANDROID_AGENT: ${{ secrets.XMLY_ANDROID_AGENT }}
+                  SYNCURL: https://github.com/Zero-S1/xmly_speed/raw/master/xmly_speed.py

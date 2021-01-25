@@ -4,26 +4,39 @@
 name: 京东宠汪汪喂食
 
 on:
-  schedule:
-    - cron: '*/20 */1 * * *'
+    workflow_dispatch:
+    schedule:
+        - cron: "0 2,12,16 * * *"
+    watch:
+        types: [started]
+    repository_dispatch:
+        types: jd_joy_feedPets
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          npm install
-      - name: '运行 【京东宠汪汪喂食】'
-        run: |
-          node lxk0301.js
-        env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_joy_feedPets.js
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行 【京东宠汪汪喂食】"
+              run: |
+                  node onlyOneExecute.js
+              env:
+                  JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  JD_DEBUG: ${{ secrets.JD_DEBUG }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+                  DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+                  JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
+                  SYNCURL: https://gitee.com/lxk0301/scripts/raw/master/jd_joy_feedPets.js

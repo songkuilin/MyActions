@@ -4,26 +4,35 @@
 name: 京东萌宠
 
 on:
-  schedule:
-    - cron: '5 6-18/6 * * *'
+    workflow_dispatch:
+    schedule:
+        - cron: "40 4,10,23 * * *"
+    watch:
+        types: [started]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          npm install
-      - name: '运行 【京东萌宠】'
-        run: |
-          node lxk0301_old.js
-        env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_pet.js
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行 【京东萌宠】"
+              run: |
+                  node onlyOneExecute.js
+              env:
+                  JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
+                  PetShareCodes: ${{ secrets.PETSHARECODES }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
+                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_pet.js

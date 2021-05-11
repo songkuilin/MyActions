@@ -4,26 +4,33 @@
 name: 京东摇钱树
 
 on:
-  schedule:
-    - cron: '40 */3 * * *'
+    workflow_dispatch:
+    schedule:
+        - cron: "20 */3 * * *"
+    watch:
+        types: [started]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          npm install
-      - name: '运行 【京东摇钱树】'
-        run: |
-          node lxk0301.js
-        env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_moneyTree.js
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行 【京东摇钱树】"
+              run: |
+                  node onlyOneExecute.js
+              env:
+                  JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_moneyTree.js

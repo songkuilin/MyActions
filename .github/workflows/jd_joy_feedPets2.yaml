@@ -1,12 +1,12 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: 京东萌宠
+name: 京东宠汪汪喂食2
 
 on:
     workflow_dispatch:
     schedule:
-        - cron: "40 4,10,23 * * *"
+        - cron: "40 8,22 * * *"
     watch:
         types: [started]
 
@@ -23,7 +23,7 @@ jobs:
             - name: npm install
               run: |
                   npm install
-            - name: "运行 【京东萌宠】"
+            - name: "运行 【京东宠汪汪喂食】"
               run: |
                   node onlyOneExecute.js
               env:
@@ -31,10 +31,9 @@ jobs:
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
-                  PetShareCodes: ${{ secrets.PETSHARECODES }}
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-                  PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
-                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_pet.js
+                  JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
+                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_joy_feedPets.js

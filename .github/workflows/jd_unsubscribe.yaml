@@ -4,26 +4,36 @@
 name: 京东取关店铺
 
 on:
-  schedule:
-    - cron: '45 15 * * *'
+    workflow_dispatch:
+    schedule:
+        - cron: "0 3-11/4 * * *"
+    watch:
+        types: [started]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          npm install
-      - name: '运行 【京东取关店铺】'
-        run: |
-          node lxk0301.js
-        env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_unsubscribe.js
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行 【京东取关店铺】"
+              run: |
+                  node onlyOneExecute.js
+              env:
+                  JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+                  DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+                  UNSUBSCRIBE: ${{ secrets.UNSUBSCRIBE }}
+                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_unsubscribe.js

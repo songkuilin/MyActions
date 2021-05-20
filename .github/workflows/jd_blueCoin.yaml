@@ -4,16 +4,16 @@
 name: 京小超领蓝币
 
 on:
-    # push:
-    #     branches:
-    #         - master
+    workflow_dispatch:
     schedule:
-        - cron: "10 17 * * *"
+        - cron: "5 16 * * *"
+    watch:
+        types: [started]
 
 jobs:
     build:
         runs-on: ubuntu-latest
-
+        if: github.event.repository.owner.id == github.event.sender.id
         steps:
             - uses: actions/checkout@v1
             - name: Use Node.js 10.x
@@ -25,7 +25,15 @@ jobs:
                   npm install
             - name: "运行【京小超领蓝币(小费)】"
               run: |
-                  node lxk0301.js
+                  node onlyOneExecute.js
               env:
                   JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+                  DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+                  MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
                   SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_blueCoin.js

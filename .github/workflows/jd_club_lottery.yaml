@@ -1,12 +1,9 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: 京东萌宠
+name: 抽京豆
 
 on:
     workflow_dispatch:
     schedule:
-        - cron: "40 4,10,23 * * *"
+        - cron: "5 16 * * *"
     watch:
         types: [started]
 
@@ -15,15 +12,16 @@ jobs:
         runs-on: ubuntu-latest
         if: github.event.repository.owner.id == github.event.sender.id
         steps:
-            - uses: actions/checkout@v1
-            - name: Use Node.js 10.x
+            - name: Checkout codes
+              uses: actions/checkout@v2
+            - name: Use Node.js
               uses: actions/setup-node@v1
               with:
-                  node-version: 10.x
+                  node-version: "12.x"
             - name: npm install
               run: |
                   npm install
-            - name: "运行 【京东萌宠】"
+            - name: "运行【抽京豆】"
               run: |
                   node onlyOneExecute.js
               env:
@@ -31,10 +29,8 @@ jobs:
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
-                  PetShareCodes: ${{ secrets.PETSHARECODES }}
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-                  PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
-                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_pet.js
+                  SYNCURL: https://github.com/lxk0301/scripts/raw/master/jd_club_lottery.js
